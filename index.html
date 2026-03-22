@@ -1,125 +1,665 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farline</title>
+    <title>Farline — Turn takes into markets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Mulish', sans-serif;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        farline: '#6731b7',
+                        farlineDark: '#4c1d8a',
+                        farlineLight: '#8b5cf6',
+                    },
+                    fontFamily: {
+                        display: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 10s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 15s ease infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0, 0) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0, 0) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.5' },
+                            '50%': { opacity: '0.8' },
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                    backgroundSize: {
+                        '400': '400% 400%',
+                    },
+                },
+            },
         }
-        .font-montserrat {
-            font-family: 'Montserrat', sans-serif;
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .font-display { font-family: 'Inter', sans-serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+
+        /* Hero: deep gradient + orbs */
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0612 0%, #1a0d2e 25%, #0f0a1a 50%, #150d28 75%, #0a0612 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+        .hero-orb-1 { width: 500px; height: 500px; background: #6731b7; top: -20%; right: -10%; }
+        .hero-orb-2 { width: 400px; height: 400px; background: #4f46e5; bottom: -10%; left: -5%; animation-delay: -2s; }
+        .hero-orb-3 { width: 300px; height: 300px; background: #7c3aed; top: 50%; left: 50%; animation-delay: -1s; opacity: 0.2; }
+        .hero-grain::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Section fade */
+        .section-fade {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* CTA buttons */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 0 1px rgba(103, 49, 183, 0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 40px rgba(103, 49, 183, 0.5), 0 0 80px rgba(103, 49, 183, 0.2);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            box-shadow: 0 0 30px rgba(103, 49, 183, 0.25);
+            border-color: rgba(103, 49, 183, 0.5);
+        }
+
+        /* Market cards - trading terminal */
+        .market-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(15, 10, 26, 0.9) 0%, rgba(26, 13, 46, 0.9) 100%);
+            border: 1px solid rgba(103, 49, 183, 0.2);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                0 4px 24px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .market-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(103, 49, 183, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .market-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(103, 49, 183, 0.4);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 40px rgba(103, 49, 183, 0.2),
+                0 24px 48px rgba(0, 0, 0, 0.5);
+        }
+        .bar-fill {
+            width: 0;
+            flex-shrink: 0;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+        .section-fade.visible .bar-fill {
+            width: var(--bar-width, 50%);
+        }
+
+        /* Insight items */
+        .insight-item {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .insight-item:hover {
+            transform: translateX(12px);
+            color: #8b5cf6;
+        }
+
+        /* Hero stats - sequential reveal */
+        .hero-stat {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-stat.visible { opacity: 1; transform: translateY(0); }
+
+        /* Manifesto stagger */
+        .manifesto-line { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .manifesto-line.visible { opacity: 1; transform: translateY(0); }
+        .manifesto-line:nth-child(1) { transition-delay: 0.1s; }
+        .manifesto-line:nth-child(2) { transition-delay: 0.25s; }
+        .manifesto-line:nth-child(3) { transition-delay: 0.4s; }
+
+        /* Final CTA glow */
+        .cta-glow {
+            background: linear-gradient(135deg, #0a0612 0%, #1a0d2e 50%, #0f0a1a 100%);
+            position: relative;
+        }
+        .cta-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(103, 49, 183, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-btn-giant {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 0 1px rgba(103, 49, 183, 0.3);
+        }
+        .cta-btn-giant:hover {
+            box-shadow: 0 0 60px rgba(103, 49, 183, 0.5), 0 0 120px rgba(103, 49, 183, 0.25);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Inspiration: light aesthetic */
+        ::selection { background-color: #EBE0FF; color: #6731b7; }
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nf)'/%3E%3C/svg%3E");
+        }
+        .ambient-blob {
+            position: absolute; filter: blur(80px); opacity: 0.4; border-radius: 50%;
+            animation: blob 10s ease-in-out infinite;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+        }
+        .dark-glass {
+            background: rgba(24, 24, 27, 0.8);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #6731b7 0%, #9D6BFF 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-lift { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(103, 49, 183, 0.15); }
+        .market-showcase-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .market-showcase-card:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 40px rgba(103, 49, 183, 0.2), 0 24px 48px -12px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body class="bg-white text-gray-900">
-    <div class="min-h-screen flex flex-col">
-        <!-- Header / Hero -->
-        <header class="pt-16 pb-12 px-6">
-            <div class="max-w-2xl mx-auto text-center">
-                <h1 class="font-montserrat text-4xl md:text-5xl font-bold mb-4" style="color: #6731b7;">
-                    FAR<span class="underline">LINE</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-700 font-medium">
-                    Turning takes into markets
-                </p>
+<body class="font-sans text-gray-900 antialiased bg-white relative overflow-x-hidden">
+
+    <div class="noise-overlay"></div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 shadow-sm opacity-0 transition-opacity duration-300" id="nav-bg"></div>
+        <div class="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between relative z-10">
+            <a href="#" class="flex items-center gap-3 font-bold text-xl tracking-tight text-gray-950 group">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-farline to-farlineDark flex flex-col items-center justify-center text-white shadow-sm shadow-farline/20 group-hover:shadow-farline/40 group-hover:scale-105 transition-all duration-300">
+                    <span class="text-sm font-black leading-none mt-0.5">F</span>
+                    <div class="w-2.5 h-[2px] bg-white rounded-full mt-1 opacity-90 group-hover:w-3.5 transition-all duration-300"></div>
+                </div>
+                <span class="opacity-90 group-hover:opacity-100 transition-opacity">Farline</span>
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-gray-500 hover:text-gray-950 transition-colors hidden sm:block">Memo</a>
+                <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-farline hover:text-farlineDark transition-colors px-4 py-2 rounded-full hover:bg-farline/5">Try app</a>
             </div>
-        </header>
+        </div>
+    </nav>
 
-        <!-- Body Content -->
-        <main class="flex-1 px-6 pb-16">
-            <div class="max-w-2xl mx-auto space-y-8">
-                <!-- Manifesto Section -->
-                <section class="space-y-4">
-                    <div class="space-y-4 text-gray-800 leading-relaxed">
-                        <p>
-                            The internet won by letting people surface what matters — X for news, YouTube for videos, and Reddit for conversations.
-                        </p>
-                        <p>
-                            Prediction markets work the opposite way. Platforms like Kalshi and Polymarket decide what deserves a market.
-                        </p>
-                        <p class="font-bold">
-                            We're building Farline to change that.
-                        </p>
+    <!-- HERO — Light, ambient blobs -->
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-32 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+            <div class="ambient-blob w-[50vw] h-[50vw] -top-10 -left-10 bg-farline/15" style="animation-delay: 0s"></div>
+            <div class="ambient-blob w-[60vw] h-[60vw] top-[20%] -right-20 bg-farlineLight/10" style="animation-delay: 2s"></div>
+            <div class="ambient-blob w-[40vw] h-[40vw] -bottom-20 left-[20%] bg-farline/5" style="animation-delay: 4s"></div>
+        </div>
+        <div class="relative z-10 w-full max-w-5xl mx-auto text-center flex flex-col items-center">
+            <div class="animate-fade-in inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200/50 shadow-sm text-sm font-semibold text-farline mb-10 hover:bg-white hover:border-farline/20 hover:shadow-md transition-all cursor-default group">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-farline opacity-60"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-farline group-hover:scale-110 transition-transform"></span>
+                </span>
+                Now live on Farcaster
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-farline/50 group-hover:text-farline group-hover:translate-x-0.5 transition-all"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+            <h1 class="animate-slide-up font-display text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] xl:text-[8rem] leading-[0.95] font-black tracking-tighter text-gray-950 mb-8" style="animation-delay: 100ms">
+                Turn takes <br class="hidden sm:block">
+                <span class="text-gray-400 font-medium italic text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] tracking-tight relative -top-1 sm:-top-2">into</span>
+                <span class="text-gradient relative inline-block whitespace-nowrap">
+                    markets.
+                    <svg class="absolute w-full h-3 sm:h-4 -bottom-1 left-0 text-farlineLight/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                        <path d="M0,5 Q50,10 100,5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </h1>
+            <p class="animate-slide-up text-sm sm:text-base md:text-lg lg:text-xl text-gray-500 font-medium max-w-2xl mx-auto mb-12 leading-relaxed tracking-tight" style="animation-delay: 200ms">
+                Turn your alpha calls into prediction markets right from your social media feed, just by posting and invoking a bot.
+            </p>
+            <div class="animate-slide-up flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto" style="animation-delay: 300ms">
+                <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer"
+                   class="w-full sm:w-auto px-8 py-4 bg-gray-950 text-white rounded-full font-semibold text-[15px] hover:bg-black hover:scale-105 active:scale-95 transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.2)] flex items-center justify-center gap-2 group border border-gray-800">
+                    Try the mini app
+                    <div class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </div>
-                    <div>
-                        <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" 
-                           target="_blank" rel="noopener noreferrer"
-                           class="text-blue-500 hover:text-blue-600 underline underline-offset-2">
-                            Learn more →
-                        </a>
-                    </div>
-                </section>
+                </a>
+                <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" target="_blank" rel="noopener noreferrer"
+                   class="w-full sm:w-auto px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-900 rounded-full font-semibold text-[15px] border border-gray-200 hover:border-gray-300 hover:bg-white transition-all duration-300 shadow-sm hover:shadow">
+                    Read the memo
+                </a>
+            </div>
+        </div>
+    </section>
 
-                <!-- The MVP Section -->
-                <section class="space-y-4">
-                    <h2 class="font-montserrat text-2xl font-semibold text-gray-900">The MVP</h2>
-                    <p class="text-gray-800 leading-relaxed">
-                        Every great product started as a toy.
-                    </p>
-                    <p class="text-gray-800 leading-relaxed">
-                        A Farcaster mini app loved by many.
-                    </p>
-                    <div>
-                        <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" 
-                           target="_blank" rel="noopener noreferrer"
-                           class="text-blue-500 hover:text-blue-600 underline underline-offset-2">
-                            Open the mini app →
-                        </a>
-                    </div>
-                </section>
+    <!-- STATS GLASS PANEL — Floating overlap, sequential reveal -->
+    <section class="relative z-20 px-6 max-w-6xl mx-auto -mt-16 sm:-mt-24 mb-32" id="stats-section">
+        <div class="glass-panel rounded-[2rem] p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-10 sm:gap-8">
+            <div class="text-center sm:text-left flex-1 hero-stat">
+                <div class="flex items-baseline gap-1 justify-center sm:justify-start">
+                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">15</span>
+                    <span class="text-2xl font-bold text-farline">+</span>
+                </div>
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Creators</p>
+            </div>
+            <div class="w-full sm:w-px h-px sm:h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
+            <div class="text-center flex-1 hero-stat">
+                <div class="flex items-baseline gap-1 justify-center">
+                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">150</span>
+                    <span class="text-2xl font-bold text-farline">+</span>
+                </div>
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Markets Launched</p>
+            </div>
+            <div class="w-full sm:w-px h-px sm:h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
+            <div class="text-center sm:text-right flex-1 hero-stat">
+                <div class="flex items-baseline gap-1 justify-center sm:justify-end">
+                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">$90K</span>
+                    <span class="text-2xl font-bold text-farline">+</span>
+                </div>
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Notional Volume</p>
+            </div>
+        </div>
+    </section>
 
-                <!-- Team Section -->
-                <section class="space-y-4">
-                    <h2 class="font-montserrat text-2xl font-semibold text-gray-900">Team</h2>
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <p class="font-medium text-gray-900">Archisman Das (rch)</p>
-                            <div class="flex items-center gap-3">
-                                <a href="https://farcaster.xyz/rch" 
-                                   target="_blank" rel="noopener noreferrer"
-                                   class="text-blue-500 hover:text-blue-600 text-xs font-light">
-                                    [farcaster]
-                                </a>
-                                <a href="https://x.com/archismandas" 
-                                   target="_blank" rel="noopener noreferrer"
-                                   class="text-blue-500 hover:text-blue-600 text-xs font-light">
-                                    [x]
-                                </a>
+    <!-- THE PROBLEM — Light, dot grid -->
+    <section class="py-32 px-6 bg-gray-50 relative">
+        <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
+        <div class="relative max-w-6xl mx-auto section-fade">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-gray-950 mb-6 leading-[1.1]">
+                    Prediction markets are <br>
+                    <span class="text-gray-400 relative">
+                        backwards.
+                        <svg class="absolute -bottom-3 left-0 w-full h-8 text-red-500/20" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q25,20 50,10 T100,10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+                    </span>
+                </h2>
+            </div>
+            <div class="max-w-2xl mx-auto space-y-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
+                <p>Centralized platforms decide what matters and which markets deserve to exist. A small set of folks define the agenda.</p>
+                <p>Everyone else just reacts.</p>
+                <p class="text-gray-900 font-semibold">We're building Farline to change that.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE INSIGHT — Platform comparison cards -->
+    <section class="py-32 px-6 bg-white relative overflow-hidden">
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80%] bg-farline/5 rounded-l-full blur-3xl -z-10"></div>
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
+            <div class="lg:w-1/2 section-fade">
+                <h2 class="font-display text-4xl sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-gray-950 leading-[1.05] mb-8">
+                    The internet flipped <span class="text-gray-400">distribution.</span>
+                </h2>
+            </div>
+            <div class="lg:w-1/2 w-full flex flex-col gap-4 section-fade">
+                <div class="flex items-center justify-between p-6 sm:p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:bg-gray-100/50 transition-colors group cursor-default">
+                    <span class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 group-hover:scale-105 transition-transform origin-left">X</span>
+                    <span class="text-xl sm:text-2xl font-medium text-gray-400 group-hover:text-gray-500 transition-colors">for news</span>
+                </div>
+                <div class="flex items-center justify-between p-6 sm:p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:bg-gray-100/50 transition-colors group cursor-default">
+                    <span class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 group-hover:scale-105 transition-transform origin-left">YouTube</span>
+                    <span class="text-xl sm:text-2xl font-medium text-gray-400 group-hover:text-gray-500 transition-colors">for video</span>
+                </div>
+                <div class="flex items-center justify-between p-6 sm:p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:bg-gray-100/50 transition-colors group cursor-default">
+                    <span class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 group-hover:scale-105 transition-transform origin-left">Reddit</span>
+                    <span class="text-xl sm:text-2xl font-medium text-gray-400 group-hover:text-gray-500 transition-colors">for conversation</span>
+                </div>
+                <div class="flex items-center justify-between p-6 sm:p-8 rounded-3xl bg-farline text-white shadow-xl shadow-farline/20 relative overflow-hidden group mt-2 transform hover:scale-[1.02] transition-all duration-300 cursor-default">
+                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                    <div class="flex items-center gap-3 relative z-10">
+                        <span class="text-2xl sm:text-3xl font-bold tracking-tight">Farline</span>
+                    </div>
+                    <span class="text-xl sm:text-2xl font-medium text-white/90 relative z-10">for prediction markets</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE PRODUCT — Light gray -->
+    <section class="py-32 px-6 bg-surface-50 border-y border-surface-100 relative" vid="129">
+        <div class="max-w-7xl mx-auto relative z-10" vid="130">
+            <div class="text-center mb-24 reveal-on-scroll visible" vid="131">
+                <h2 class="text-4xl md:text-5xl lg:text-[3.5rem] font-black tracking-tighter text-surface-950 mb-6" vid="132">From take <span class="text-surface-300 font-normal" vid="133">→</span> market</h2>
+                <p class="text-xl text-surface-500 font-medium" vid="134">Just a post on X or a cast on Farcaster</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 lg:gap-12 relative" vid="135">
+                
+                
+                <div class="hidden lg:block absolute top-[140px] left-[20%] right-[20%] h-[2px] bg-gradient-to-r from-transparent via-brand-light/40 to-transparent -z-10" vid="136"></div>
+                
+                
+                <div class="reveal-on-scroll relative group visible" vid="137">
+                    <div class="bg-white rounded-[2.5rem] p-8 border border-surface-200/60 shadow-sm group-hover:shadow-xl group-hover:border-surface-300 transition-all duration-500 h-full flex flex-col" vid="138">
+                        <div class="w-12 h-12 rounded-full bg-surface-100 border-4 border-surface-50 text-surface-900 font-bold flex items-center justify-center absolute -top-6 left-1/2 -translate-x-1/2 shadow-sm text-lg" vid="139">1</div>
+                        
+                        
+                        <div class="h-56 bg-surface-50 rounded-[1.5rem] mb-8 border border-surface-200/50 flex flex-col justify-center p-6 relative overflow-hidden group-hover:bg-surface-100/50 transition-colors" vid="140">
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-surface-100 w-full transform group-hover:-translate-y-1 transition-transform duration-500" vid="141">
+                                <div class="flex items-center gap-3 mb-4" vid="142">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 border border-indigo-50" vid="143"></div>
+                                    <div class="space-y-2" vid="144">
+                                        <div class="h-2.5 w-24 bg-surface-200 rounded-full" vid="145"></div>
+                                        <div class="h-2 w-16 bg-surface-100 rounded-full" vid="146"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-2.5" vid="147">
+                                    <div class="h-2 w-full bg-surface-800 rounded-full" vid="148"></div>
+                                    <div class="h-2 w-4/5 bg-surface-800 rounded-full" vid="149"></div>
+                                    <div class="h-2 w-2/3 bg-surface-800 rounded-full" vid="150"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="space-y-2">
-                            <p class="font-medium text-gray-900">Puneet Kaura (0xpuneet)</p>
-                            <div class="flex items-center gap-3">
-                                <a href="https://farcaster.xyz/0xpuneet" 
-                                   target="_blank" rel="noopener noreferrer"
-                                   class="text-blue-500 hover:text-blue-600 text-xs font-light">
-                                    [farcaster]
-                                </a>
-                                <a href="https://x.com/pkaura" 
-                                   target="_blank" rel="noopener noreferrer"
-                                   class="text-blue-500 hover:text-blue-600 text-xs font-light">
-                                    [x]
-                                </a>
+                        
+                        <h3 class="text-2xl font-bold mb-3 text-surface-950 tracking-tight text-center" vid="151">Post a take</h3>
+                        <p class="text-surface-500 font-medium text-center leading-relaxed flex-grow" vid="152">Share your contrarian opinion on Farcaster or X like you normally would.</p>
+                    </div>
+                </div>
+
+                
+                <div class="reveal-on-scroll relative group visible" style="transition-delay: 150ms;" vid="153">
+                    <div class="bg-white rounded-[2.5rem] p-8 border border-brand/10 shadow-sm shadow-brand/5 group-hover:shadow-xl group-hover:shadow-brand/10 group-hover:border-brand/30 transition-all duration-500 h-full flex flex-col mt-12 lg:mt-0" vid="154">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 border-4 border-surface-50 text-brand font-bold flex items-center justify-center absolute -top-6 left-1/2 -translate-x-1/2 shadow-sm text-lg z-10" vid="155">2</div>
+                        
+                        
+                        <div class="h-56 bg-brand-50/50 rounded-[1.5rem] mb-8 border border-brand/10 flex items-center justify-center p-6 relative overflow-hidden group-hover:bg-brand-50 transition-colors" vid="156">
+                            <div class="absolute inset-0 bg-[radial-gradient(#7B3FE4_1px,transparent_1px)] [background-size:16px_16px] opacity-[0.03]" vid="157"></div>
+                            <div class="bg-white px-6 py-4 rounded-2xl shadow-md border border-brand/20 flex items-center gap-3 transform group-hover:scale-105 transition-transform duration-500 relative z-10" vid="158">
+                                <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white" vid="159">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="160"><path d="M12 8V4H8" vid="161"></path><rect width="16" height="12" x="4" y="8" rx="2" vid="162"></rect><path d="M2 14h2" vid="163"></path><path d="M20 14h2" vid="164"></path><path d="M15 13v2" vid="165"></path><path d="M9 13v2" vid="166"></path></svg>
+                                </div>
+                                <span class="font-mono text-[15px] font-semibold text-surface-900 tracking-tight" vid="167">@farline <span class="text-brand" vid="168">make this a market</span></span>
                             </div>
                         </div>
+                        
+                        <h3 class="text-2xl font-bold mb-3 text-surface-950 tracking-tight text-center" vid="169">Tag farline</h3>
+                        <p class="text-surface-500 font-medium text-center leading-relaxed flex-grow" vid="170">Tag our AI agent. It parses the terms and sets the resolution criteria.</p>
                     </div>
-                </section>
-            </div>
-        </main>
+                </div>
 
-        <!-- Footer -->
-        <footer class="px-6 py-8">
-            <div class="max-w-2xl mx-auto text-center">
-                <p class="text-sm text-gray-500">farline.xyz</p>
+                
+                <div class="reveal-on-scroll relative group visible" style="transition-delay: 300ms;" vid="171">
+                    <div class="bg-black rounded-[2.5rem] pt-10 pb-8 px-8 border border-gray-800 shadow-xl group-hover:shadow-2xl group-hover:shadow-farline/20 group-hover:border-farline/40 transition-all duration-500 h-full flex flex-col mt-12 lg:mt-0 relative overflow-visible" vid="172">
+                        <div class="absolute inset-0 bg-gradient-to-br from-farline/20 via-transparent to-transparent opacity-30 rounded-[2.5rem] pointer-events-none" vid="173"></div>
+                        
+                        <div class="w-12 h-12 rounded-full bg-farline text-white font-bold flex items-center justify-center absolute -top-6 left-1/2 -translate-x-1/2 shadow-lg shadow-farline/30 text-lg z-20" vid="174">3</div>
+                        
+                        
+                        <div class="h-56 bg-gray-900 rounded-[1.5rem] mb-8 border border-gray-800 flex flex-col justify-end p-5 relative overflow-hidden group-hover:bg-gray-800 transition-colors z-10" vid="175">
+                            
+                            <div class="w-full relative z-10 transform group-hover:-translate-y-2 transition-transform duration-500" vid="176">
+                                <div class="h-3 w-3/4 bg-white rounded-full mb-6 opacity-90" vid="177"></div>
+                                <div class="flex gap-3 w-full" vid="178">
+                                    <div class="flex-1 h-12 bg-green-500/20 rounded-xl border border-green-500/30 flex items-center px-4 justify-between backdrop-blur-sm" vid="179">
+                                        <div class="text-green-400 font-bold text-sm" vid="180">YES</div>
+                                        <div class="text-white font-mono text-sm" vid="181">62%</div>
+                                    </div>
+                                    <div class="flex-1 h-12 bg-red-500/20 rounded-xl border border-red-500/30 flex items-center px-4 justify-between backdrop-blur-sm" vid="182">
+                                        <div class="text-red-400 font-bold text-sm" vid="183">NO</div>
+                                        <div class="text-white font-mono text-sm" vid="184">38%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold mb-3 text-white tracking-tight text-center relative z-10" vid="185">Market goes live</h3>
+                        <p class="text-gray-400 font-medium text-center leading-relaxed flex-grow relative z-10" vid="186">Your market is instantly tradeable by your audience within the X or Farcaster feed.</p>
+                    </div>
+                </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
+
+    <!-- MARKETS SHOWCASE — Contrarian takes. Turned into markets. -->
+    <section class="py-32 px-6 bg-gray-50 relative">
+        <div class="relative max-w-6xl mx-auto section-fade">
+            <div class="text-center mb-20">
+                <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-950 tracking-tight mb-4">
+                    Contrarian takes. Turned into markets.
+                </h2>
+                <p class="text-gray-500 text-base sm:text-lg">Where conviction meets consequence.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 — $HOUSE -->
+                <div class="rounded-2xl p-8 sm:p-10 flex flex-col bg-white border border-gray-200/80 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e3c7c17f-9afd-4d71-2d0a-71346e33dd00/original" alt="attentiontrader.eth" class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100 flex-shrink-0">
+                        <p class="text-gray-500 text-sm font-medium">attentiontrader.eth</p>
+                    </div>
+                    <h3 class="font-bold text-2xl sm:text-3xl text-gray-950 tracking-tight mb-2"><span class="inline-block mr-2" aria-hidden="true">🔥</span>$HOUSE</h3>
+                    <p class="text-gray-500 text-sm italic mb-6">Tracking the sniper before the dump</p>
+                    <div class="space-y-4 text-gray-600 leading-relaxed">
+                        <p>A single wallet accumulated a large share of supply during presales. Its past behavior showed a clear pattern — exit aggressively after unlocks.</p>
+                        <p>The likely sell pressure and price impact were mapped in advance. The move played out almost exactly as expected.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <p class="text-gray-900 font-semibold"><span class="text-gray-500 font-medium">Outcome:</span> Underestimated the buy-side absorption.</p>
+                    </div>
+                </div>
+                <!-- Card 2 — Silver -->
+                <div class="rounded-2xl p-8 sm:p-10 flex flex-col bg-white border border-gray-200/80 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://pbs.twimg.com/profile_images/1951006120308289537/GkrovaAA_400x400.jpg" alt="tch" class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100 flex-shrink-0">
+                        <p class="text-gray-500 text-sm font-medium">tch</p>
+                    </div>
+                    <h3 class="font-bold text-2xl sm:text-3xl text-gray-950 tracking-tight mb-2"><span class="inline-block mr-2" aria-hidden="true">🥈</span>Silver</h3>
+                    <p class="text-gray-500 text-sm italic mb-6">Ignoring the dip, backing the fundamentals</p>
+                    <div class="space-y-4 text-gray-600 leading-relaxed">
+                        <p>Silver dumped and sentiment flipped bearish. The thesis didn't.</p>
+                        <p>Export caps from China and Mexico, strong industrial demand, and weakening trust in central banks pointed to continued upside.</p>
+                        <p>Nothing moved for two days. On the third, price broke out to new highs.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <p class="text-gray-900 font-semibold"><span class="text-gray-500 font-medium">Outcome:</span> Thesis held. Breakout followed.</p>
+                    </div>
+                </div>
+                <!-- Card 3 — Antihunter -->
+                <div class="rounded-2xl p-8 sm:p-10 flex flex-col bg-white border border-gray-200/80 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://res.cloudinary.com/base-app/image/upload/f_auto/v1772010505/8418da1a-6108-4b85-8813-ef540981b6ab.jpg" alt="Kev" class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100 flex-shrink-0">
+                        <p class="text-gray-500 text-sm font-medium">kev</p>
+                    </div>
+                    <h3 class="font-bold text-2xl sm:text-3xl text-gray-950 tracking-tight mb-2"><span class="inline-block mr-2" aria-hidden="true">🤖</span>Antihunter</h3>
+                    <p class="text-gray-500 text-sm italic mb-6">Fading hype in a weak structure</p>
+                    <div class="space-y-4 text-gray-600 leading-relaxed">
+                        <p>Price was making lower lows while hype kept increasing. Influencer backing and attention were rising, but structure stayed weak.</p>
+                        <p>Looked like a typical late-stage VC distribution setup despite the narrative.</p>
+                        <p>Short-term expectation leaned bearish. Minutes later — a sharp dump, followed by a volatile bounce.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <p class="text-gray-900 font-semibold"><span class="text-gray-500 font-medium">Outcome:</span> Downside hit first. Volatility followed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE MVP — Gray -->
+    <section class="py-32 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto text-center section-fade">
+            <p class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-4 tracking-tight">Every great product starts as a toy.</p>
+            <p class="text-2xl sm:text-3xl text-gray-600 font-light mb-12">Ours is a Farcaster mini app.</p>
+            <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer"
+               class="btn-primary inline-flex items-center justify-center px-10 py-4 bg-farline text-white font-semibold rounded-xl text-lg">
+                Open the mini app
+            </a>
+        </div>
+    </section>
+
+    <!-- MANIFESTO — Strikethrough, underline, gradient -->
+    <section class="py-40 px-6 bg-white relative">
+        <div class="max-w-5xl mx-auto text-center reveal-on-scroll visible" vid="281">
+            <p class="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black tracking-tighter leading-[1.1] text-surface-300" vid="282">
+                Markets shouldn’t be decided by <span class="text-surface-950 line-through decoration-farline decoration-[6px] opacity-90 hover:opacity-100 transition-opacity" vid="283">committees</span>.<br class="hidden md:block mt-2" vid="284">
+                They should emerge from the <span class="text-surface-950 border-b-[6px] border-farline pb-1" vid="285">internet</span>.<br class="hidden md:block mt-2" vid="286">
+                We’re building Farline to make that <span class="text-gradient" vid="287">inevitable.</span>
+            </p>
+        </div>
+    </section>
+    <!-- FINAL CTA — Glass panel on brand tint -->
+    <section class="py-32 px-6 relative overflow-hidden bg-farline/5">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,49,183,0.1)_0%,transparent_70%)]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 section-fade glass-panel rounded-[3rem] p-12 sm:p-20 shadow-2xl shadow-farline/10">
+            <div class="w-16 h-16 mx-auto bg-farline rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-farline/30">
+                <div class="relative flex flex-col items-center justify-center">
+                    <span class="text-3xl font-black text-white leading-none mt-1">F</span>
+                    <div class="w-4 h-[3px] bg-white rounded-full mt-1.5 opacity-90"></div>
+                </div>
+            </div>
+            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-950 mb-6">Ping us </h2>
+            <p class="text-xl text-gray-500 font-medium mb-10 max-w-xl mx-auto">Drop a market on Farline, and we'll build it for you.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://t.me/+f1dnvzm-wTk5ZGY1" target="_blank" rel="noopener noreferrer"
+                   class="w-full sm:w-auto px-10 py-5 bg-gray-950 text-white rounded-full font-bold text-[16px] hover:bg-black transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 inline-flex items-center justify-center gap-3">
+                    <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                    </svg>
+                    Drop a market
+                </a>
+            </div>
+        </div>
+    </section>
+        
+
+    <!-- FOOTER -->
+    <footer class="py-16 px-6 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <a href="/" class="flex items-center gap-3 font-bold text-lg tracking-tight text-gray-950 group">
+                <div class="w-6 h-6 rounded flex flex-col items-center justify-center bg-farline text-white transition-transform group-hover:scale-110">
+                    <span class="text-[10px] font-black leading-none mt-0.5">F</span>
+                    <div class="w-1.5 h-[1.5px] bg-white rounded-full mt-0.5"></div>
+                </div>
+                farline.xyz
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    entry.target.querySelectorAll?.('.manifesto-line')?.forEach(line => line.classList.add('visible'));
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-fade').forEach((el, i) => {
+            observer.observe(el);
+            if (el.closest('section.hero-bg')) {
+                el.style.transitionDelay = `${i * 0.06}s`;
+                requestAnimationFrame(() => el.classList.add('visible'));
+            }
+        });
+
+        // Hero stats in glass panel: sequential reveal when in view
+        const statsSection = document.getElementById('stats-section');
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.hero-stat').forEach((el, i) => {
+                            setTimeout(() => el.classList.add('visible'), i * 250);
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            statsObserver.observe(statsSection);
+            if (statsSection.getBoundingClientRect().top < window.innerHeight) {
+                statsSection.querySelectorAll('.hero-stat').forEach((el, i) => {
+                    setTimeout(() => el.classList.add('visible'), 600 + i * 250);
+                });
+            }
+        }
+
+        // Nav scroll effect
+        const navbar = document.getElementById('navbar');
+        const navBg = document.getElementById('nav-bg');
+        if (navbar && navBg) {
+            window.addEventListener('scroll', () => {
+                navBg.classList.toggle('opacity-100', window.scrollY > 20);
+                navBg.classList.toggle('shadow-sm', window.scrollY > 20);
+            });
+            window.dispatchEvent(new Event('scroll'));
+        }
+    </script>
 </body>
 </html>
-
