@@ -6,7 +6,7 @@
     <title>Farline — Turn takes into markets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Montserrat:wght@800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,6 +20,7 @@
                     fontFamily: {
                         display: ['Inter', 'sans-serif'],
                         sans: ['Inter', 'sans-serif'],
+                        logo: ['Montserrat', 'sans-serif'],
                     },
                     animation: {
                         'blob': 'blob 10s ease-in-out infinite',
@@ -68,6 +69,7 @@
         html { scroll-behavior: smooth; }
         .font-display { font-family: 'Inter', sans-serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
+        .font-logo { font-family: 'Montserrat', sans-serif; }
 
         /* Hero: deep gradient + orbs */
         .hero-bg {
@@ -250,12 +252,8 @@
     <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300" id="navbar">
         <div class="absolute inset-0 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 shadow-sm opacity-0 transition-opacity duration-300" id="nav-bg"></div>
         <div class="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between relative z-10">
-            <a href="#" class="flex items-center gap-3 font-bold text-xl tracking-tight text-gray-950 group">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-farline to-farlineDark flex flex-col items-center justify-center text-white shadow-sm shadow-farline/20 group-hover:shadow-farline/40 group-hover:scale-105 transition-all duration-300">
-                    <span class="text-sm font-black leading-none mt-0.5">F</span>
-                    <div class="w-2.5 h-[2px] bg-white rounded-full mt-1 opacity-90 group-hover:w-3.5 transition-all duration-300"></div>
-                </div>
-                <span class="opacity-90 group-hover:opacity-100 transition-opacity">Farline</span>
+            <a href="#" class="font-logo font-extrabold text-farline uppercase tracking-tight text-lg sm:text-xl group-hover:text-farlineDark transition-colors">
+                FAR<span class="underline decoration-2 decoration-farline underline-offset-1">LINE</span>
             </a>
             <div class="flex items-center gap-6">
                 <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-gray-500 hover:text-gray-950 transition-colors hidden sm:block">Memo</a>
@@ -275,9 +273,9 @@
             
             <h1 class="animate-slide-up font-display text-[2.75rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] xl:text-[8rem] leading-[0.95] font-black tracking-tighter text-gray-950 mb-6 sm:mb-8" style="animation-delay: 100ms">
                 Turn takes <br class="hidden sm:block">
-                <span class="text-gray-400 font-medium italic text-[2.25rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] tracking-tight relative -top-1 sm:-top-2">into</span>
+                <span class="text-black-400 font-medium italic text-[2.25rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] tracking-tight relative -top-1 sm:-top-2">into</span>
                 <span class="text-gradient relative inline-block whitespace-nowrap">
-                    markets
+                    markets.
                     <svg class="absolute w-full h-3 sm:h-4 -bottom-1 left-0 text-farlineLight/30" viewBox="0 0 100 10" preserveAspectRatio="none">
                         <path d="M0,5 Q50,10 100,5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
                     </svg>
@@ -303,7 +301,7 @@
     </section>
 
     <!-- STATS GLASS PANEL — Floating overlap, sequential reveal -->
-    <section class="relative z-20 px-4 sm:px-6 max-w-6xl mx-auto -mt-10 sm:-mt-16 md:-mt-24 mb-24 sm:mb-32" id="stats-section">
+    <section class="relative z-20 px-4 sm:px-6 max-w-6xl mx-auto -mt-10 sm:-mt-16 md:-mt-24 mb-16 sm:mb-20" id="stats-section">
         <div class="glass-panel rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 md:p-12 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-8">
             <div class="text-center sm:text-left flex-1 hero-stat">
                 <div class="flex items-baseline gap-1 justify-center sm:justify-start">
@@ -332,13 +330,13 @@
     </section>
 
     <!-- THE PROBLEM — Light, dot grid -->
-    <section class="py-32 px-6 bg-gray-50 relative">
+    <section class="py-20 sm:py-24 px-6 bg-gray-50 relative">
         <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
         <div class="relative max-w-6xl mx-auto section-fade">
-            <div class="text-center max-w-3xl mx-auto mb-20">
+            <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
                 <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-gray-950 mb-6 leading-[1.1]">
                     Prediction markets are <br>
-                    <span class="text-gray-400 relative">
+                    <span class="text-black-400 relative">
                         backwards.
                         <svg class="absolute -bottom-3 left-0 w-full h-8 text-red-500/20" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q25,20 50,10 T100,10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
                     </span>
@@ -353,12 +351,12 @@
     </section>
 
     <!-- THE INSIGHT — Platform comparison cards -->
-    <section class="py-32 px-6 bg-white relative overflow-hidden">
+    <section class="py-20 sm:py-24 px-6 bg-white relative overflow-hidden">
         <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80%] bg-farline/5 rounded-l-full blur-3xl -z-10"></div>
         <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
             <div class="lg:w-1/2 section-fade">
                 <h2 class="font-display text-4xl sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-gray-950 leading-[1.05] mb-8">
-                    The internet flipped <span class="text-gray-400">distribution.</span>
+                    The internet flipped <span class="text-black-400">distribution.</span>
                 </h2>
             </div>
             <div class="lg:w-1/2 w-full flex flex-col gap-4 section-fade">
@@ -386,9 +384,9 @@
     </section>
 
     <!-- THE PRODUCT — Light gray -->
-    <section class="py-32 px-6 bg-surface-50 border-y border-surface-100 relative" vid="129">
+    <section class="py-20 sm:py-24 px-6 bg-surface-50 border-y border-surface-100 relative" vid="129">
         <div class="max-w-7xl mx-auto relative z-10" vid="130">
-            <div class="text-center mb-24 reveal-on-scroll visible" vid="131">
+            <div class="text-center mb-16 sm:mb-20 reveal-on-scroll visible" vid="131">
                 <h2 class="text-4xl md:text-5xl lg:text-[3.5rem] font-black tracking-tighter text-surface-950 mb-6" vid="132">From take <span class="text-surface-300 font-normal" vid="133">→</span> market</h2>
                 <p class="text-xl text-surface-500 font-medium" vid="134">Just a post on X or a cast on Farcaster</p>
             </div>
@@ -481,9 +479,9 @@
     </section>
 
     <!-- MARKETS SHOWCASE — Contrarian takes. Turned into markets. -->
-    <section class="py-32 px-6 bg-gray-50 relative">
+    <section class="py-20 sm:py-24 px-6 bg-gray-50 relative">
         <div class="relative max-w-6xl mx-auto section-fade">
-            <div class="text-center mb-20">
+            <div class="text-center mb-14 sm:mb-16">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-950 tracking-tight mb-4">
                     Contrarian takes. Turned into markets.
                 </h2>
@@ -545,11 +543,44 @@
     </section>
 
     <!-- THE MVP — Gray -->
-    <section class="py-32 px-6 bg-gray-50">
+    <section class="py-20 sm:py-24 px-6 bg-gray-50">
         <div class="max-w-4xl mx-auto text-center section-fade">
-            <p class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-4 tracking-tight">Every great product starts as a toy.</p>
-            <p class="text-2xl sm:text-3xl text-gray-600 font-light mb-12">Ours is a Farcaster mini app.</p>
-            <div class="relative w-full max-w-3xl mx-auto mb-12 rounded-2xl overflow-hidden shadow-xl border border-gray-200/80 bg-gray-900 ring-1 ring-gray-200/50" style="aspect-ratio: 16/9;">
+            <p class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-3 tracking-tight">Every great product starts as a toy.</p>
+            <p class="text-lg sm:text-xl text-gray-500 font-medium mb-6">Ours started as a Farcaster mini app loved by many.</p>
+            
+            <!-- Top Mini App badge -->
+            <div class="inline-flex items-center rounded-2xl bg-white border border-gray-200/80 shadow-lg shadow-gray-200/50 mb-10 overflow-hidden">
+                <div class="flex-shrink-0 p-4 bg-gray-50/80 border-r border-gray-100">
+                    <img src="https://play-lh.googleusercontent.com/CjVd0200wTIwL13HmIh2_x_RYMTLaJBO4rbgJ59_oQHyqcDmEmM-yT2FJfris-RneTifJwSCRZMXUPHy8sEX=w240-h480-rw" alt="Farcaster logo" class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-contain">
+                </div>
+                <div class="flex flex-col justify-center px-5 py-3 gap-0.5">
+                    <span class="font-logo font-extrabold text-farline uppercase tracking-tight text-lg sm:text-xl">Top Mini App</span>
+                    <span class="text-xs font-medium text-gray-500 tracking-wide">Top 50 for 12 weeks straight</span>
+                </div>
+            </div>
+            
+            <!-- Platform badges -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10">
+                <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-farline text-white font-semibold text-sm shadow-lg shadow-farline/25 hover:shadow-farline/40 hover:scale-105 transition-all duration-300 whitespace-nowrap">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    Farcaster — Live
+                </a>
+                <div class="flex items-center gap-3">
+                    <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-farline/10 text-farline border border-farline/20 font-semibold text-sm shadow-sm hover:bg-farline/15 hover:border-farline/35 transition-all duration-300 whitespace-nowrap">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        X — Coming soon
+                    </a>
+                    <a href="https://world.org/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-farline/10 text-farline border border-farline/20 font-semibold text-sm shadow-sm hover:bg-farline/15 hover:border-farline/35 transition-all duration-300 whitespace-nowrap">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        World App — Coming soon
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative w-full max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden shadow-xl border border-gray-200/80 bg-gray-900 ring-1 ring-gray-200/50" style="aspect-ratio: 16/9;">
                 <iframe
                     class="absolute inset-0 w-full h-full"
                     src="https://www.youtube-nocookie.com/embed/FReVSLNFGQg"
@@ -562,13 +593,13 @@
             </div>
             <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer"
                class="btn-primary inline-flex items-center justify-center px-10 py-4 bg-farline text-white font-semibold rounded-xl text-lg">
-                Open the mini app
+                Try the Farcaster mini app
             </a>
         </div>
     </section>
 
     <!-- MANIFESTO — Strikethrough, underline, gradient -->
-    <section class="py-40 px-6 bg-white relative">
+    <section class="py-24 sm:py-28 px-6 bg-white relative">
         <div class="max-w-5xl mx-auto text-center reveal-on-scroll visible" vid="281">
             <p class="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black tracking-tighter leading-[1.1] text-surface-300" vid="282">
                 Markets shouldn’t be decided by <span class="text-surface-950 line-through decoration-farline decoration-[6px] opacity-90 hover:opacity-100 transition-opacity" vid="283">committees</span>.<br class="hidden md:block mt-2" vid="284">
@@ -578,24 +609,21 @@
         </div>
     </section>
     <!-- FINAL CTA — Glass panel on brand tint -->
-    <section class="py-32 px-6 relative overflow-hidden bg-farline/5">
+    <section class="py-20 sm:py-24 px-6 relative overflow-hidden bg-farline/5">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,49,183,0.1)_0%,transparent_70%)]"></div>
         <div class="max-w-4xl mx-auto text-center relative z-10 section-fade glass-panel rounded-[3rem] p-12 sm:p-20 shadow-2xl shadow-farline/10">
-            <div class="w-16 h-16 mx-auto bg-farline rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-farline/30">
-                <div class="relative flex flex-col items-center justify-center">
-                    <span class="text-3xl font-black text-white leading-none mt-1">F</span>
-                    <div class="w-4 h-[3px] bg-white rounded-full mt-1.5 opacity-90"></div>
-                </div>
+            <div class="font-logo font-extrabold text-4xl sm:text-5xl text-farline uppercase tracking-tight mb-8">
+                FAR<span class="underline decoration-4 decoration-farline underline-offset-2">LINE</span>
             </div>
-            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-950 mb-6">Ping us </h2>
-            <p class="text-xl text-gray-500 font-medium mb-10 max-w-xl mx-auto">Drop a market on Farline, and we'll build it for you.</p>
+            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-950 mb-6">Got a thesis you believe in?</h2>
+            <p class="text-xl text-gray-600 font-medium mb-10 max-w-xl mx-auto leading-relaxed">Interested in dropping a market on an idea you have? Ping us on Telegram. We'll turn it into a real market for you.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="https://t.me/+f1dnvzm-wTk5ZGY1" target="_blank" rel="noopener noreferrer"
                    class="w-full sm:w-auto px-10 py-5 bg-gray-950 text-white rounded-full font-bold text-[16px] hover:bg-black transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 inline-flex items-center justify-center gap-3">
                     <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
-                    Drop a market
+                    Join us here
                 </a>
             </div>
         </div>
@@ -603,14 +631,10 @@
         
 
     <!-- FOOTER -->
-    <footer class="py-16 px-6 bg-white border-t border-gray-100">
+    <footer class="py-12 px-6 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <a href="/" class="flex items-center gap-3 font-bold text-lg tracking-tight text-gray-950 group">
-                <div class="w-6 h-6 rounded flex flex-col items-center justify-center bg-farline text-white transition-transform group-hover:scale-110">
-                    <span class="text-[10px] font-black leading-none mt-0.5">F</span>
-                    <div class="w-1.5 h-[1.5px] bg-white rounded-full mt-0.5"></div>
-                </div>
-                farline.xyz
+            <a href="/" class="flex items-center gap-2 font-logo font-extrabold text-base text-farline tracking-tight group-hover:text-farlineDark transition-colors">
+                <span class="font-sans font-medium text-gray-500 group-hover:text-gray-700">farline.xyz</span>
             </a>
         </div>
     </footer>
