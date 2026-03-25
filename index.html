@@ -263,7 +263,7 @@
     </nav>
 
     <!-- HERO — Light, ambient blobs -->
-    <section class="relative isolate pt-24 pb-16 sm:pt-40 sm:pb-24 md:pb-32 px-4 sm:px-6 min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+    <section class="relative isolate pt-16 pb-8 sm:pt-32 sm:pb-16 md:pb-24 px-4 sm:px-6 min-h-[64vh] sm:min-h-[78vh] flex flex-col items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div class="ambient-blob w-[50vw] h-[50vw] -top-10 -left-10 bg-farline/15" style="animation-delay: 0s"></div>
             <div class="ambient-blob w-[60vw] h-[60vw] top-[20%] -right-20 bg-farlineLight/10" style="animation-delay: 2s"></div>
@@ -297,43 +297,41 @@
                     Read the memo
                 </a>
             </div>
-        </div>
-    </section>
-
-    <!-- STATS GLASS PANEL — Floating overlap, sequential reveal -->
-    <section class="relative z-20 px-4 sm:px-6 max-w-6xl mx-auto -mt-10 sm:-mt-16 md:-mt-24 mb-16 sm:mb-20" id="stats-section">
-        <div class="glass-panel rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 md:p-12 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-8">
-            <div class="text-center sm:text-left flex-1 hero-stat">
-                <div class="flex items-baseline gap-1 justify-center sm:justify-start">
-                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">15</span>
-                    <span class="text-2xl font-bold text-farline">+</span>
+            <div class="w-full mt-4 sm:mt-6 max-w-2xl hero-stat visible" id="stats-section">
+                <div class="glass-panel rounded-2xl px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between gap-2 sm:gap-4">
+                    <div class="text-center flex-1 hero-stat visible">
+                        <div class="flex items-baseline justify-center gap-0.5">
+                            <span class="text-2xl sm:text-3xl font-black text-gray-950 tracking-tight">15</span>
+                            <span class="text-sm sm:text-base font-bold text-farline">+</span>
+                        </div>
+                        <p class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Creators</p>
+                    </div>
+                    <div class="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
+                    <div class="text-center flex-1 hero-stat visible">
+                        <div class="flex items-baseline justify-center gap-0.5">
+                            <span class="text-2xl sm:text-3xl font-black text-gray-950 tracking-tight">150</span>
+                            <span class="text-sm sm:text-base font-bold text-farline">+</span>
+                        </div>
+                        <p class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Markets</p>
+                    </div>
+                    <div class="w-px h-10 sm:h-12 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
+                    <div class="text-center flex-1 hero-stat visible">
+                        <div class="flex items-baseline justify-center gap-0.5">
+                            <span class="text-2xl sm:text-3xl font-black text-gray-950 tracking-tight">$90K</span>
+                            <span class="text-sm sm:text-base font-bold text-farline">+</span>
+                        </div>
+                        <p class="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Volume</p>
+                    </div>
                 </div>
-                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Creators</p>
-            </div>
-            <div class="w-full sm:w-px h-px sm:h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
-            <div class="text-center flex-1 hero-stat">
-                <div class="flex items-baseline gap-1 justify-center">
-                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">150</span>
-                    <span class="text-2xl font-bold text-farline">+</span>
-                </div>
-                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Markets Launched</p>
-            </div>
-            <div class="w-full sm:w-px h-px sm:h-16 bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
-            <div class="text-center sm:text-right flex-1 hero-stat">
-                <div class="flex items-baseline gap-1 justify-center sm:justify-end">
-                    <span class="text-4xl sm:text-5xl font-black text-gray-950 tracking-tighter">$90K</span>
-                    <span class="text-2xl font-bold text-farline">+</span>
-                </div>
-                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Notional Volume</p>
             </div>
         </div>
     </section>
 
     <!-- THE PROBLEM — Light, dot grid -->
-    <section class="py-20 sm:py-24 px-6 bg-gray-50 relative">
+    <section class="py-10 sm:py-14 px-6 bg-gray-50 relative">
         <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
         <div class="relative max-w-6xl mx-auto section-fade">
-            <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+            <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
                 <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-gray-950 mb-6 leading-[1.1]">
                     Prediction markets are <br>
                     <span class="text-black-400 relative">
@@ -351,7 +349,7 @@
     </section>
 
     <!-- THE INSIGHT — Platform comparison cards -->
-    <section class="py-20 sm:py-24 px-6 bg-white relative overflow-hidden">
+    <section class="py-10 sm:py-14 px-6 bg-white relative overflow-hidden">
         <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-[80%] bg-farline/5 rounded-l-full blur-3xl -z-10"></div>
         <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
             <div class="lg:w-1/2 section-fade">
@@ -384,9 +382,9 @@
     </section>
 
     <!-- THE PRODUCT — Light gray -->
-    <section class="py-20 sm:py-24 px-6 bg-surface-50 border-y border-surface-100 relative" vid="129">
+    <section class="py-10 sm:py-14 px-6 bg-surface-50 border-y border-surface-100 relative" vid="129">
         <div class="max-w-7xl mx-auto relative z-10" vid="130">
-            <div class="text-center mb-16 sm:mb-20 reveal-on-scroll visible" vid="131">
+            <div class="text-center mb-10 sm:mb-14 reveal-on-scroll visible" vid="131">
                 <h2 class="text-4xl md:text-5xl lg:text-[3.5rem] font-black tracking-tighter text-surface-950 mb-6" vid="132">From take <span class="text-surface-300 font-normal" vid="133">→</span> market</h2>
                 <p class="text-xl text-surface-500 font-medium" vid="134">Just a post on X or a cast on Farcaster</p>
             </div>
@@ -446,7 +444,7 @@
                 </div>
 
                 
-                <div class="reveal-on-scroll relative group visible" style="transition-delay: 300ms;" vid="171">
+                <div class="reveal-on-scroll relative group visible mb-6 sm:mb-8" style="transition-delay: 300ms;" vid="171">
                     <div class="bg-black rounded-[2.5rem] pt-10 pb-8 px-8 border border-gray-800 shadow-xl group-hover:shadow-2xl group-hover:shadow-farline/20 group-hover:border-farline/40 transition-all duration-500 h-full flex flex-col mt-12 lg:mt-0 relative overflow-visible" vid="172">
                         <div class="absolute inset-0 bg-gradient-to-br from-farline/20 via-transparent to-transparent opacity-30 rounded-[2.5rem] pointer-events-none" vid="173"></div>
                         
@@ -479,9 +477,9 @@
     </section>
 
     <!-- MARKETS SHOWCASE — Contrarian takes. Turned into markets. -->
-    <section class="py-20 sm:py-24 px-6 bg-gray-50 relative">
+    <section class="py-10 sm:py-14 px-6 bg-gray-50 relative mt-4 sm:mt-6">
         <div class="relative max-w-6xl mx-auto section-fade">
-            <div class="text-center mb-14 sm:mb-16">
+            <div class="text-center mb-8 sm:mb-10">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-950 tracking-tight mb-4">
                     Contrarian takes. Turned into markets.
                 </h2>
@@ -546,7 +544,7 @@
     </section>
 
     <!-- THE MVP — Gray -->
-    <section class="py-20 sm:py-24 px-6 bg-gray-50">
+    <section class="py-10 sm:py-14 px-6 bg-gray-50">
         <div class="max-w-4xl mx-auto text-center section-fade">
             <p class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-3 tracking-tight">Every great product starts as a toy.</p>
             <p class="text-lg sm:text-xl text-gray-500 font-medium mb-6">Ours started as a Farcaster mini app loved by many.</p>
@@ -602,7 +600,7 @@
     </section>
 
     <!-- MANIFESTO — Strikethrough, underline, gradient -->
-    <section class="py-24 sm:py-28 px-6 bg-white relative">
+    <section class="py-12 sm:py-16 px-6 bg-white relative">
         <div class="max-w-5xl mx-auto text-center reveal-on-scroll visible" vid="281">
             <p class="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black tracking-tighter leading-[1.1] text-surface-300" vid="282">
                 Markets shouldn’t be decided by <span class="text-surface-950 line-through decoration-farline decoration-[6px] opacity-90 hover:opacity-100 transition-opacity" vid="283">committees</span>.<br class="hidden md:block mt-2" vid="284">
@@ -612,14 +610,14 @@
         </div>
     </section>
     <!-- FINAL CTA — Glass panel on brand tint -->
-    <section class="py-20 sm:py-24 px-6 relative overflow-hidden bg-farline/5">
+    <section class="py-10 sm:py-14 px-6 relative overflow-hidden bg-farline/5">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(103,49,183,0.1)_0%,transparent_70%)]"></div>
         <div class="max-w-4xl mx-auto text-center relative z-10 section-fade glass-panel rounded-[3rem] p-12 sm:p-20 shadow-2xl shadow-farline/10">
-            <div class="font-logo font-extrabold text-4xl sm:text-5xl text-farline uppercase tracking-tight mb-8">
+            <div class="font-logo font-extrabold text-4xl sm:text-5xl text-farline uppercase tracking-tight mb-4">
                 FAR<span class="underline decoration-4 decoration-farline underline-offset-2">LINE</span>
             </div>
-            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-950 mb-6">Got a thesis you believe in?</h2>
-            <p class="text-xl text-gray-600 font-medium mb-10 max-w-xl mx-auto leading-relaxed">Interested in dropping a market on an idea you have? Ping us on Telegram. We'll turn it into a real market for you.</p>
+            <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-gray-950 mb-3">Got a thesis you believe in?</h2>
+            <p class="text-xl text-gray-600 font-medium mb-6 max-w-xl mx-auto leading-relaxed">Interested in dropping a market on an idea you have? Ping us on Telegram. We'll turn it into a real market for you.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="https://t.me/+f1dnvzm-wTk5ZGY1" target="_blank" rel="noopener noreferrer"
                    class="w-full sm:w-auto px-10 py-5 bg-gray-950 text-white rounded-full font-bold text-[16px] hover:bg-black transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 inline-flex items-center justify-center gap-3">
