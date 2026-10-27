@@ -324,6 +324,7 @@
         .farewell-title span { display: block; color: var(--farewell-purple); }
         .farewell-thanks { margin: 0 0 10px; font-size: 18px; line-height: 1.6; font-weight: 600; letter-spacing: -.35px; }
         .farewell-message { margin: 0; max-width: 490px; font-size: 15px; line-height: 1.7; color: var(--farewell-muted); }
+        .farewell-message-mobile { display: none; }
         .farewell-signature { margin: 22px 0 28px; font-size: 15px; font-weight: 500; }
         .farewell-signature span { color: var(--farewell-purple); }
         .farewell-contacts { padding-top: 22px; border-top: 1px solid #e8e3ed; }
@@ -356,23 +357,27 @@
         }
         @media (max-width: 560px) {
             .farewell { border-radius: 20px; }
-            .farewell-content { padding: 18px 22px 20px; }
-            .farewell-header { margin-bottom: 22px; }
-            .farewell-title { font-size: 42px; letter-spacing: -2px; margin-bottom: 18px; }
-            .farewell-thanks { font-size: 17px; }
-            .farewell-message { font-size: 14px; line-height: 1.65; }
-            .farewell-signature { margin: 18px 0 22px; font-size: 14px; }
-            .farewell-contacts { padding-top: 18px; }
-            .farewell-founders { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-            .farewell-founder { padding: 12px 14px; }
-            .farewell-portrait { width: 48px; height: 48px; }
-            .farewell-name { font-size: 14px; }
-            .farewell-role { margin-bottom: 4px; }
-            .farewell-footer { margin-top: 14px; }
+            .farewell-content { padding: 12px 18px; }
+            .farewell-header { margin-bottom: 6px; }
+            .farewell-title { font-size: 32px; letter-spacing: -1.4px; margin-bottom: 12px; }
+            .farewell-label, .farewell-thanks, .farewell-signature, .farewell-message-desktop { display: none; }
+            .farewell-message-mobile { display: inline; }
+            .farewell-message { font-size: 14px; line-height: 1.55; }
+            .farewell-contacts { margin-top: 16px; padding-top: 12px; }
+            .farewell-contact-heading { margin-bottom: 10px; font-size: 13px; }
+            .farewell-founders { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+            .farewell-founder { padding: 8px 10px; gap: 10px; }
+            .farewell-portrait { width: 40px; height: 40px; }
+            .farewell-person { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2px 8px; }
+            .farewell-name { margin: 0; font-size: 13px; }
+            .farewell-role { display: none; }
+            .farewell-handle { font-size: 12px; }
+            .farewell-arrow { align-self: center; }
+            .farewell-footer { margin-top: 8px; }
         }
         @media (max-width: 350px) {
             .farewell-content { padding-inline: 18px; }
-            .farewell-title { font-size: 37px; }
+            .farewell-title { font-size: 32px; }
         }
         @keyframes farewell-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes farewell-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
@@ -396,10 +401,10 @@
             <p class="farewell-label">A note from the founders</p>
             <h2 class="farewell-title" id="farewell-title">Farline has <span>shut down.</span></h2>
             <p class="farewell-thanks" id="farewell-thanks">Thank you for being part of it.</p>
-            <p class="farewell-message" id="farewell-message">To everyone who created a market, shared a take, or gave us feedback — thank you for helping bring Farline to life.</p>
+            <p class="farewell-message" id="farewell-message"><span class="farewell-message-desktop">To everyone who created a market, shared a take, or gave us feedback — thank you for helping bring Farline to life.</span><span class="farewell-message-mobile">Thank you to everyone who created markets, shared takes, and supported us.</span></p>
             <p class="farewell-signature">With gratitude, <span>Archie &amp; Puneet</span></p>
             <section class="farewell-contacts" aria-label="Connect with the co-founders">
-                <p class="farewell-contact-heading">We’d love to stay in touch.</p>
+                <p class="farewell-contact-heading">Stay in touch with the founders.</p>
                 <div class="farewell-founders">
                     <a class="farewell-founder" href="https://x.com/archismandas" target="_blank" rel="noopener noreferrer" aria-label="Connect with Archie, co-founder, @archismandas on X">
                         <img class="farewell-portrait farewell-portrait-archie" src="images/archi.jpg" alt="Archie" width="56" height="56">
