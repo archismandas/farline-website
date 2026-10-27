@@ -474,15 +474,16 @@
                 Spin up price prediction markets on any asset right from the feed
             </p>
             <div class="animate-slide-up flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto" style="animation-delay: 300ms">
-                <button type="button" disabled
+                <button type="button" id="mini-app-shutdown" aria-describedby="mini-app-status"
                    class="w-full sm:w-auto px-8 py-4 bg-gray-100 text-gray-500 rounded-full font-semibold text-[15px] flex items-center justify-center border border-gray-200 cursor-not-allowed">
-                    App has shut down
+                    Try the mini app
                 </button>
                 <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" target="_blank" rel="noopener noreferrer"
                    class="w-full sm:w-auto px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-900 rounded-full font-semibold text-[15px] border border-gray-200 hover:border-gray-300 hover:bg-white transition-all duration-300 shadow-sm hover:shadow">
                     Read the memo
                 </a>
             </div>
+            <p id="mini-app-status" role="status" class="text-sm text-gray-500 mt-3 empty:hidden"></p>
             <div class="w-full mt-4 sm:mt-6 max-w-2xl hero-stat visible" id="stats-section">
                 <div class="glass-panel rounded-2xl px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between gap-2 sm:gap-4">
                     <div class="text-center flex-1 hero-stat visible">
@@ -828,6 +829,10 @@
     </footer>
 
     <script>
+        document.getElementById('mini-app-shutdown').addEventListener('click', () => {
+            document.getElementById('mini-app-status').textContent = 'App has shut down';
+        });
+
         const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -40px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
