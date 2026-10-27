@@ -420,7 +420,6 @@
                 dialog.classList.remove('is-closing');
                 document.documentElement.classList.remove('farewell-open');
                 closing = false;
-                try { sessionStorage.setItem('farline-farewell-dismissed', 'true'); } catch { /* Storage may be unavailable. */ }
                 const target = returnFocus instanceof HTMLElement && returnFocus !== document.body
                     ? returnFocus : document.querySelector('.farewell-reopen');
                 target?.focus({ preventScroll: true });
@@ -431,9 +430,7 @@
             document.addEventListener('click', event => {
                 if (event.target.closest('[data-farewell-open]')) openFarewell();
             });
-            let dismissed = false;
-            try { dismissed = sessionStorage.getItem('farline-farewell-dismissed') === 'true'; } catch { /* Show the note without storage. */ }
-            if (!dismissed) openFarewell();
+            openFarewell();
         })();
     </script>
 
