@@ -242,11 +242,200 @@
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 0 40px rgba(103, 49, 183, 0.2), 0 24px 48px -12px rgba(0, 0, 0, 0.5);
         }
+        /* Founders' farewell note */
+        html.farewell-open { overflow: hidden; }
+        .farewell {
+            --farewell-purple: #6731b7;
+            --farewell-ink: #211c29;
+            --farewell-muted: #68616f;
+            width: min(660px, calc(100% - 24px));
+            max-width: none;
+            max-height: calc(100vh - 24px);
+            max-height: calc(100dvh - 24px);
+            margin: auto;
+            padding: 0;
+            overflow: auto;
+            overscroll-behavior: contain;
+            border: 0;
+            border-top: 5px solid var(--farewell-purple);
+            border-radius: 24px;
+            background: #fff;
+            color: var(--farewell-ink);
+            box-shadow: 0 32px 100px rgba(29, 13, 49, .22);
+            font-family: 'Inter', sans-serif;
+        }
+        .farewell::backdrop {
+            background: rgba(30, 19, 45, .36);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            animation: farewell-backdrop-in 250ms ease-out both;
+        }
+        .farewell.is-closing::backdrop { animation: farewell-backdrop-out 150ms ease-out both; }
+        .farewell-content { padding: 28px 40px 24px; }
+        .farewell-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; }
+        .farewell-logo { font: 800 15px 'Montserrat', sans-serif; letter-spacing: -.6px; color: var(--farewell-purple); }
+        .farewell-logo span { text-decoration: underline; text-underline-offset: 3px; }
+        .farewell button, .farewell-founder, .farewell-reopen { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .farewell-close {
+            display: grid; place-items: center; width: 44px; height: 44px;
+            flex-shrink: 0; border: 0; border-radius: 50%; background: transparent;
+            color: var(--farewell-muted); font-size: 26px; cursor: pointer;
+            transition: background-color 150ms ease, transform 150ms ease;
+        }
+        .farewell-label { margin: 0 0 14px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: var(--farewell-purple); text-transform: uppercase; }
+        .farewell-title { margin: 0 0 22px; font-size: 52px; line-height: 1.04; font-weight: 800; letter-spacing: -2.6px; }
+        .farewell-title span { display: block; color: var(--farewell-purple); }
+        .farewell-thanks { margin: 0 0 10px; font-size: 18px; line-height: 1.6; font-weight: 600; letter-spacing: -.35px; }
+        .farewell-message { margin: 0; max-width: 490px; font-size: 15px; line-height: 1.7; color: var(--farewell-muted); }
+        .farewell-signature { margin: 22px 0 28px; font-size: 15px; font-weight: 500; }
+        .farewell-signature span { color: var(--farewell-purple); }
+        .farewell-contacts { padding-top: 22px; border-top: 1px solid #e8e3ed; }
+        .farewell-contact-heading { margin: 0 0 14px; color: var(--farewell-muted); font-size: 14px; line-height: 1.5; }
+        .farewell-founders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .farewell-founder {
+            display: flex; align-items: center; gap: 12px; min-width: 0;
+            padding: 16px 12px; border: 1px solid transparent; border-radius: 14px;
+            background: #f5f1fb; text-decoration: none;
+            transition: transform 160ms cubic-bezier(.23, 1, .32, 1), background-color 160ms ease, border-color 160ms ease;
+        }
+        .farewell-portrait { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; object-fit: cover; }
+        .farewell-portrait-archie { object-position: center 40%; }
+        .farewell-portrait-puneet { object-position: center 30%; }
+        .farewell-person { min-width: 0; flex: 1; }
+        .farewell-name { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
+        .farewell-role { margin: 0 0 7px; font-size: 12px; color: var(--farewell-muted); }
+        .farewell-handle { font-size: 13px; font-weight: 500; color: var(--farewell-purple); overflow-wrap: anywhere; }
+        .farewell-arrow { align-self: flex-start; font-size: 19px; color: var(--farewell-purple); }
+        .farewell-footer { display: flex; justify-content: center; margin-top: 22px; }
+        .farewell-explore { min-height: 44px; padding: 12px 16px; border: 0; background: transparent; color: var(--farewell-muted); font-size: 14px; cursor: pointer; transition: color 150ms ease, transform 150ms ease; }
+        .farewell-explore span { margin-left: 5px; }
+        .farewell-reopen { min-height: 44px; color: #6731b7; font-size: 14px; text-align: center; cursor: pointer; }
+        .farewell :focus-visible, .farewell-reopen:focus-visible { outline: 3px solid #9c71d8; outline-offset: 3px; }
+        .farewell button:active, .farewell-founder:active { transform: scale(.97); }
+        @media (hover: hover) and (pointer: fine) {
+            .farewell-close:hover { background: #f5f1fb; }
+            .farewell-founder:hover { transform: translateY(-2px); border-color: #cbb6e7; background: #f0e9fa; }
+            .farewell-explore:hover, .farewell-reopen:hover { color: #4c1d8a; }
+        }
+        @media (max-width: 560px) {
+            .farewell { border-radius: 20px; }
+            .farewell-content { padding: 18px 22px 20px; }
+            .farewell-header { margin-bottom: 22px; }
+            .farewell-title { font-size: 42px; letter-spacing: -2px; margin-bottom: 18px; }
+            .farewell-thanks { font-size: 17px; }
+            .farewell-message { font-size: 14px; line-height: 1.65; }
+            .farewell-signature { margin: 18px 0 22px; font-size: 14px; }
+            .farewell-contacts { padding-top: 18px; }
+            .farewell-founders { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+            .farewell-founder { padding: 12px 14px; }
+            .farewell-portrait { width: 48px; height: 48px; }
+            .farewell-name { font-size: 14px; }
+            .farewell-role { margin-bottom: 4px; }
+            .farewell-footer { margin-top: 14px; }
+        }
+        @media (max-width: 350px) {
+            .farewell-content { padding-inline: 18px; }
+            .farewell-title { font-size: 37px; }
+        }
+        @keyframes farewell-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes farewell-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            .farewell::backdrop { animation-duration: 150ms; }
+            .farewell button, .farewell-founder { transition: none; }
+            .farewell button:active, .farewell-founder:active, .farewell-founder:hover { transform: none; }
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900 antialiased bg-white relative overflow-x-hidden">
 
     <div class="noise-overlay"></div>
+
+    <dialog class="farewell" id="farewell-dialog" aria-labelledby="farewell-title" aria-describedby="farewell-thanks farewell-message">
+        <div class="farewell-content">
+            <header class="farewell-header">
+                <div class="farewell-logo">FAR<span>LINE</span></div>
+                <button class="farewell-close" type="button" aria-label="Close farewell note" data-farewell-close autofocus>×</button>
+            </header>
+            <p class="farewell-label">A note from the founders</p>
+            <h2 class="farewell-title" id="farewell-title">Farline has <span>shut down.</span></h2>
+            <p class="farewell-thanks" id="farewell-thanks">Thank you for being part of it.</p>
+            <p class="farewell-message" id="farewell-message">To everyone who created a market, shared a take, or gave us feedback — thank you for helping bring Farline to life.</p>
+            <p class="farewell-signature">With gratitude, <span>Archie &amp; Puneet</span></p>
+            <section class="farewell-contacts" aria-label="Connect with the co-founders">
+                <p class="farewell-contact-heading">We’d love to stay in touch.</p>
+                <div class="farewell-founders">
+                    <a class="farewell-founder" href="https://x.com/archismandas" target="_blank" rel="noopener noreferrer" aria-label="Connect with Archie, co-founder, @archismandas on X">
+                        <img class="farewell-portrait farewell-portrait-archie" src="images/archi.jpg" alt="Archie" width="56" height="56">
+                        <div class="farewell-person"><p class="farewell-name">Archie</p><p class="farewell-role">Co-founder</p><span class="farewell-handle">@archismandas</span></div>
+                        <span class="farewell-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="farewell-founder" href="https://x.com/pkaura" target="_blank" rel="noopener noreferrer" aria-label="Connect with Puneet, co-founder, @pkaura on X">
+                        <img class="farewell-portrait farewell-portrait-puneet" src="images/puneet_img.jpg" alt="Puneet" width="56" height="56">
+                        <div class="farewell-person"><p class="farewell-name">Puneet</p><p class="farewell-role">Co-founder</p><span class="farewell-handle">@pkaura</span></div>
+                        <span class="farewell-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </section>
+            <div class="farewell-footer"><button class="farewell-explore" type="button" data-farewell-close>Explore what we built <span aria-hidden="true">→</span></button></div>
+        </div>
+    </dialog>
+    <script>
+        (() => {
+            const dialog = document.getElementById('farewell-dialog');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let motion;
+            let closing = false;
+            let returnFocus;
+
+            function openFarewell() {
+                if (dialog.open) return;
+                returnFocus = document.activeElement;
+                dialog.classList.remove('is-closing');
+                document.documentElement.classList.add('farewell-open');
+                dialog.showModal();
+                dialog.scrollTop = 0;
+                motion = dialog.animate([
+                    { opacity: 0, transform: reducedMotion.matches ? 'none' : 'translateY(8px) scale(.98)' },
+                    { opacity: 1, transform: 'none' }
+                ], { duration: reducedMotion.matches ? 150 : 250, easing: 'cubic-bezier(.23, 1, .32, 1)' });
+            }
+
+            async function closeFarewell(event) {
+                event?.preventDefault();
+                if (!dialog.open || closing) return;
+                closing = true;
+                const keyboard = event?.type === 'cancel' || event?.detail === 0;
+                // Retarget a partly completed entrance without jumping to its end.
+                const current = getComputedStyle(dialog);
+                const from = { opacity: current.opacity, transform: current.transform };
+                motion?.cancel();
+                if (!keyboard) {
+                    dialog.classList.add('is-closing');
+                    motion = dialog.animate([from, { opacity: 0, transform: reducedMotion.matches ? 'none' : 'translateY(4px) scale(.99)' }],
+                        { duration: 150, easing: 'cubic-bezier(.23, 1, .32, 1)', fill: 'forwards' });
+                    await motion.finished.catch(() => {});
+                }
+                dialog.close();
+                motion?.cancel();
+                dialog.classList.remove('is-closing');
+                document.documentElement.classList.remove('farewell-open');
+                closing = false;
+                try { sessionStorage.setItem('farline-farewell-dismissed', 'true'); } catch { /* Storage may be unavailable. */ }
+                const target = returnFocus instanceof HTMLElement && returnFocus !== document.body
+                    ? returnFocus : document.querySelector('.farewell-reopen');
+                target?.focus({ preventScroll: true });
+            }
+
+            dialog.querySelectorAll('[data-farewell-close]').forEach(button => button.addEventListener('click', closeFarewell));
+            dialog.addEventListener('cancel', closeFarewell);
+            document.addEventListener('click', event => {
+                if (event.target.closest('[data-farewell-open]')) openFarewell();
+            });
+            let dismissed = false;
+            try { dismissed = sessionStorage.getItem('farline-farewell-dismissed') === 'true'; } catch { /* Show the note without storage. */ }
+            if (!dismissed) openFarewell();
+        })();
+    </script>
 
     <!-- NAV -->
     <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300" id="navbar">
@@ -637,6 +826,7 @@
             <a href="/" class="flex items-center gap-2 font-logo font-extrabold text-base text-farline tracking-tight group-hover:text-farlineDark transition-colors">
                 <span class="font-sans font-medium text-gray-500 group-hover:text-gray-700">farline.xyz</span>
             </a>
+            <button class="farewell-reopen" type="button" data-farewell-open>Farline has shut down · Founders’ note</button>
         </div>
     </footer>
 
