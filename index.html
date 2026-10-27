@@ -242,6 +242,43 @@
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 0 40px rgba(103, 49, 183, 0.2), 0 24px 48px -12px rgba(0, 0, 0, 0.5);
         }
+        /* Persistent announcement above the navigation. */
+        :root { --announcement-height: 44px; }
+        body { padding-top: var(--announcement-height); }
+        .site-header { position: fixed; top: 0; inset-inline: 0; z-index: 40; }
+        .announcement-ribbon {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; min-height: var(--announcement-height); padding: 10px 20px;
+            border: 0; background: #6731b7; color: #fff;
+            font: 500 14px/1.45 'Inter', sans-serif; text-align: center;
+            cursor: pointer; touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; -webkit-user-select: none;
+            transition: background-color 150ms ease;
+        }
+        .announcement-info {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 18px; height: 18px; flex-shrink: 0;
+            border: 1.5px solid currentColor; border-radius: 50%;
+            font-size: 12px; font-weight: 700; line-height: 1;
+        }
+        .announcement-desktop strong { font-weight: 600; }
+        .announcement-mobile { display: none; }
+        .announcement-arrow { font-size: 20px; line-height: 1; }
+        .announcement-ribbon:focus-visible { outline: 2px solid #fff; outline-offset: -5px; }
+        .announcement-ribbon:active { background: #4c1d8a; }
+        @media (hover: hover) and (pointer: fine) {
+            .announcement-ribbon:hover { background: #57279f; }
+        }
+        @media (max-width: 639px) {
+            :root { --announcement-height: 60px; }
+            .announcement-ribbon { gap: 10px; padding: 9px 16px; }
+            .announcement-desktop { display: none; }
+            .announcement-mobile { display: block; }
+            .announcement-mobile strong { display: block; font-weight: 600; }
+            .announcement-mobile span { text-decoration: underline; text-underline-offset: 3px; }
+        }
+
         /* Founders' farewell note */
         html.farewell-open { overflow: hidden; }
         .farewell {
@@ -421,7 +458,7 @@
                 document.documentElement.classList.remove('farewell-open');
                 closing = false;
                 const target = returnFocus instanceof HTMLElement && returnFocus !== document.body
-                    ? returnFocus : document.querySelector('.farewell-reopen');
+                    ? returnFocus : document.querySelector('.announcement-ribbon');
                 target?.focus({ preventScroll: true });
             }
 
@@ -434,8 +471,15 @@
         })();
     </script>
 
+    <header class="site-header">
+        <button class="announcement-ribbon" type="button" data-farewell-open aria-haspopup="dialog" aria-controls="farewell-dialog">
+            <span class="announcement-info" aria-hidden="true">i</span>
+            <span class="announcement-desktop">Important announcement: <strong>Farline has shut down.</strong></span>
+            <span class="announcement-mobile"><strong>The app has shut down.</strong><span>Click here to know more.</span></span>
+            <span class="announcement-arrow" aria-hidden="true">›</span>
+        </button>
     <!-- NAV -->
-    <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300" id="navbar">
+    <nav class="relative transition-all duration-300" id="navbar">
         <div class="absolute inset-0 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 shadow-sm opacity-0 transition-opacity duration-300" id="nav-bg"></div>
         <div class="max-w-7xl mx-auto px-6 h-16 sm:h-20 flex items-center justify-between relative z-10">
             <a href="#" class="font-logo font-extrabold text-farline uppercase tracking-tight text-lg sm:text-xl group-hover:text-farlineDark transition-colors">
@@ -447,6 +491,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- HERO — Light, ambient blobs -->
     <section class="relative isolate pt-16 pb-8 sm:pt-32 sm:pb-16 md:pb-24 px-4 sm:px-6 min-h-[64vh] sm:min-h-[78vh] flex flex-col items-center justify-center overflow-hidden">
