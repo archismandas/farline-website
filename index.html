@@ -487,7 +487,7 @@
             </a>
             <div class="flex items-center gap-6">
                 <a href="https://www.notion.so/Public-Memo-Farline-Ver-3-5-2afc66e09ae980e2a007d69d1a6eb139?source=copy_link" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-gray-500 hover:text-gray-950 transition-colors hidden sm:block">Memo</a>
-                <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-farline hover:text-farlineDark transition-colors px-4 py-2 rounded-full hover:bg-farline/5">Try app</a>
+                <button type="button" data-farewell-open class="text-sm font-semibold text-gray-500 bg-gray-100 border border-gray-200 px-4 py-2 rounded-full cursor-not-allowed">Try app</button>
             </div>
         </div>
     </nav>
@@ -791,13 +791,10 @@
             
             <!-- Platform badges -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 w-full">
-                <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-farline text-white font-semibold text-sm shadow-lg shadow-farline/25 hover:shadow-farline/40 hover:scale-105 transition-all duration-300 whitespace-nowrap w-full sm:w-auto">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                    </span>
-                    Farcaster — Live
-                </a>
+                <button type="button" data-app-shutdown aria-describedby="farcaster-app-status" class="flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200 font-semibold text-sm whitespace-nowrap w-full sm:w-auto cursor-not-allowed">
+                    <span class="inline-flex h-2 w-2 rounded-full bg-gray-400" aria-hidden="true"></span>
+                    Farcaster — Shut down
+                </button>
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
                     <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-farline/10 text-farline border border-farline/20 font-semibold text-sm shadow-sm hover:bg-farline/15 hover:border-farline/35 transition-all duration-300 whitespace-nowrap w-full sm:w-auto">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -821,10 +818,11 @@
                     allowfullscreen
                 ></iframe>
             </div>
-            <a href="https://farcaster.xyz/miniapps/KVK235_SOxZN/the-clankline" target="_blank" rel="noopener noreferrer"
-               class="btn-primary inline-flex items-center justify-center px-10 py-4 bg-farline text-white font-semibold rounded-xl text-lg">
+            <button type="button" data-app-shutdown aria-describedby="farcaster-app-status"
+               class="inline-flex items-center justify-center px-10 py-4 bg-gray-100 text-gray-500 border border-gray-200 font-semibold rounded-xl text-lg cursor-not-allowed">
                 Try the Farcaster mini app
-            </a>
+            </button>
+            <p id="farcaster-app-status" role="status" class="text-sm text-gray-500 mt-3 empty:hidden"></p>
         </div>
     </section>
 
@@ -873,6 +871,11 @@
     <script>
         document.getElementById('mini-app-shutdown').addEventListener('click', () => {
             document.getElementById('mini-app-status').textContent = 'App has shut down';
+        });
+        document.querySelectorAll('[data-app-shutdown]').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById(button.getAttribute('aria-describedby')).textContent = 'App has shut down';
+            });
         });
 
         const observerOptions = { threshold: 0.08, rootMargin: '0px 0px -40px 0px' };
